@@ -1,11 +1,6 @@
 # Getting and Cleaning Data Course Project
 library(reshape2)
 
-# change this to local work directory
-#projwd <- "/path/to/local/coursera/project/"
-#projwd <- "~/Dokumente/proj/coursera/getting_and_cleaning_data/courseproject"
-#setwd(projwd)
-
 # global constants
 k.zipfile <- "getdata_projectfiles_UCI HAR Dataset.zip"
 k.tidydata.file <- "tidydata.txt"
@@ -21,65 +16,18 @@ read.data <- function (){
   # training data
   file <- "UCI HAR Dataset/train/subject_train.txt"
   subject_train <- read.table(file, header = FALSE, sep = "")
-#  colnames(subject_train) <- "id"
   file <- "UCI HAR Dataset/train/X_train.txt"
   x_train <- read.table(file, header = FALSE, sep = "")
   file <- "UCI HAR Dataset/train/y_train.txt"
   y_train <- read.table(file, header = FALSE, sep = "")
-#  colnames(y_train) <- "activity"  
   # test data
   file <- "UCI HAR Dataset/test/subject_test.txt"
   subject_test <- read.table(file, header = FALSE, sep = "")
-#  colnames(subject_test) <- "id"
   file <- "UCI HAR Dataset/test/X_test.txt"
   x_test <- read.table(file, header = FALSE, sep = "")
   file <- "UCI HAR Dataset/test/y_test.txt"
   y_test <- read.table(file, header = FALSE, sep = "")
-#  colnames(y_test) <- "activity"  
-  ## read data for exploration
-  #file <- "UCI HAR Dataset/train/Inertial Signals/body_acc_x_train.txt"
-  # body_acc_x_train <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/train/Inertial Signals/body_acc_y_train.txt"
-  # body_acc_y_train <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/train/Inertial Signals/body_acc_z_train.txt"
-  # body_acc_z_train <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/train/Inertial Signals/body_gyro_x_train.txt"
-  # body_gyro_x_train <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/train/Inertial Signals/body_gyro_y_train.txt"
-  # body_gyro_y_train <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/train/Inertial Signals/body_gyro_z_train.txt"
-  # body_gyro_z_train <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/train/Inertial Signals/total_acc_x_train.txt"
-  # total_acc_x_train <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/train/Inertial Signals/total_acc_y_train.txt"
-  # total_acc_y_train <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/train/Inertial Signals/total_acc_z_train.txt"
-  # total_acc_z_train <- read.table(file, header = FALSE, sep = "")
-  # # test data
-  # file <- "UCI HAR Dataset/test/subject_test.txt"
-  # subject_test <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/test/X_test.txt"
-  # x_test <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/test/y_test.txt"
-  # y_test <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/test/Inertial Signals/body_acc_x_test.txt"
-  # body_acc_x_test <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/test/Inertial Signals/body_acc_y_test.txt"
-  # body_acc_y_test <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/test/Inertial Signals/body_acc_z_test.txt"
-  # body_acc_z_test <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/test/Inertial Signals/body_gyro_x_test.txt"
-  # body_gyro_x_test <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/test/Inertial Signals/body_gyro_y_test.txt"
-  # body_gyro_y_test <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/test/Inertial Signals/body_gyro_z_test.txt"
-  # body_gyro_z_test <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/test/Inertial Signals/total_acc_x_test.txt"
-  # total_acc_x_test <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/test/Inertial Signals/total_acc_y_test.txt"
-  # total_acc_y_test <- read.table(file, header = FALSE, sep = "")
-  # file <- "UCI HAR Dataset/test/Inertial Signals/total_acc_z_test.txt"
-  # total_acc_z_test <- read.table(file, header = FALSE, sep = "")  
+
   return(list(activity_labels=activity_labels, features=features, 
        subject_train=subject_train, x_train=x_train, y_train=y_train,
        subject_test=subject_test, x_test=x_test, y_test=y_test))
@@ -111,8 +59,6 @@ filter.features <- function(features) {
   std.to.mean <- gsub("std", "mean", stdfeat)
   std.to.mean.logical <- features %in% std.to.mean
   # roundtrip
-  #meanl <- grepl("mean", features)
-  #meanfeat <- features[meanl]
   stdpartner <- features[std.to.mean.logical]
   stdroundtrip <- gsub("mean", "std", stdpartner)
   stdroundtripl <- features %in% stdroundtrip
@@ -203,12 +149,6 @@ convert.name <- function (name, del = ".") {
   result <- tolower(result)
   return(result)
 }
-
-# # test cases for function convert.name()
-# convert.name("fBodyGyro-bandsEnergy()-49,64..")
-# convert.name("tBodyAcc-mean()-X")
-# convert.name("angle(tBodyGyroMean,gravityMean)")
-# convert.name("AenÖIHavet..")
 
 ## main program
 unzip(k.zipfile)
